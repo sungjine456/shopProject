@@ -13,7 +13,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.inMemoryAuthentication()
-				.withUser("admin").password("1234").roles("ADMIN");
+				.withUser("admin").password("1234").roles("ADMIN")
+			.and()
+				.withUser("user").password("1234").roles("USER");
 	}
 	
 	@Override
@@ -22,15 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.antMatchers("/**").permitAll()
+				.anyRequest().authenticated()
 				.and()
 			.formLogin()
-				.loginPage("/login").permitAll()
-				.and()
-			.csrf().disable();
+				.loginPage("/login")
+				.failureUrl("/login?error")
+				.usernameParameter("id")
+				.defaultSuccessUrl("/admin")
+				.permitAll();
 	}
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/js/**", "/css/**", "/images/**");
+        web.ignoring().antMatchers("/static/**");
     }
 }

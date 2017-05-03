@@ -1,10 +1,10 @@
 <!DOCTYPE html>
+<#import "/spring.ftl" as spring>
 <html>
 	<head>
 		<title>로그인</title>
 		<link rel="stylesheet" href="/css/boot/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/boot/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="/css/common/common.css">
 		<style type="text/css">
 			.container {
 				width : 30%;
@@ -16,7 +16,11 @@
 	<body>
 		<div class="container">
 			<h1> 로그인 </h1>
-			<form id="form" class="form-signin" action="/" method="post">
+			<#if error.isPresent()>
+				The id or password is wrong, try again
+			</#if>
+			<form id="form" class="form-signin" action="/login" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<table class="table table-hover">
 					<colgroup>
 						<col width="22%"/>
