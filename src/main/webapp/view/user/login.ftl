@@ -52,7 +52,7 @@
 							<a id="joinBtn">회원가입</a>
 						</td>
 						<td>
-							<button type="button" id="loginBtn" class="btn btn-primary" style="float:right">로그인</button>
+							<button type="submit" id="loginBtn" class="btn btn-primary" style="float:right">로그인</button>
 						</td>
 					</tr>
 				</table>
