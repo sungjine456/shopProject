@@ -6,6 +6,7 @@
 ## 만들어야할 기능들..
 ----
 	1. 유저의 회원가입, 로그인, 로그아웃, 수정, 탈퇴
+	2. bootstrap 적용
 
 ## 진행된 기능들..
 ----
@@ -27,6 +28,7 @@ back end
 	5. SLF4J(Logger)
 	6. jUnit(Test)
 	7. Mockito
+	8. Security
 ```
 ```
 util library
