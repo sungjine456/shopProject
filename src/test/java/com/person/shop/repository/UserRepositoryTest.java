@@ -21,8 +21,17 @@ public class UserRepositoryTest {
 	@Autowired private UserRepository userRepository;
 	
 	@Test
-	public void findUserByIdTest() {
+	public void findUserByIdxTest() {
 		User user = userRepository.findUserByIdx(1L);
+		
+		assertThat(user.getEmail(), is("email"));
+		assertThat(user.getName(), is("name"));
+		assertThat(user.getPassword(), is("admin"));
+	}
+	
+	@Test
+	public void findUserByEmailTest() {
+		User user = userRepository.findUserByEmail("email");
 		
 		assertThat(user.getEmail(), is("email"));
 		assertThat(user.getName(), is("name"));

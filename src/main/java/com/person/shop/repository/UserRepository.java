@@ -8,4 +8,5 @@ import com.person.shop.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 	User findUserByIdx(long idx);
+	User findUserByEmail(String email);
 }

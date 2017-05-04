@@ -6,17 +6,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.inMemoryAuthentication()
-				.withUser("admin").password("1234").roles("ADMIN")
-			.and()
-				.withUser("user").password("1234").roles("USER");
-	}
+    private UserDetailsService userDetailsService;
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -29,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 				.loginPage("/login")
 				.failureUrl("/login?error")
-				.usernameParameter("id")
+				.usernameParameter("email")
 				.defaultSuccessUrl("/admin")
 				.permitAll();
 	}
@@ -37,5 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/static/**");
+    }
+    
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+        	.userDetailsService(userDetailsService)
+        	.passwordEncoder(new BCryptPasswordEncoder());
     }
 }

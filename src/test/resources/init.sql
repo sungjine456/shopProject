@@ -1,6 +1,6 @@
-drop table IF EXISTS user;
+drop table IF EXISTS users;
 
-create table user (
+create table users (
      idx int(20),
      password varchar(500),
      email varchar(20),
@@ -8,5 +8,5 @@ create table user (
      role varchar(10)
 );
 
-insert into user
-values(1, 'admin', 'email', 'name', 'admin');
+insert into users
+values(1, 'admin', 'email', 'name', 'ADMIN');
