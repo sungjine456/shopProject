@@ -20,7 +20,6 @@
 				The id or password is wrong, try again
 			</#if>
 			<form id="form" class="form-signin" action="/login" method="post">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<table class="table table-hover">
 					<colgroup>
 						<col width="22%"/>
