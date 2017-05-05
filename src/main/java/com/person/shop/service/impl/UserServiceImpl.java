@@ -3,6 +3,7 @@ package com.person.shop.service.impl;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.person.shop.domain.User;
@@ -15,6 +16,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
 	
 	public void save(User user){
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		userRepository.save(user);
 	}
 	

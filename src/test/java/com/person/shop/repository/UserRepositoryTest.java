@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,6 +22,8 @@ import com.person.shop.domain.User;
 @SpringBootTest(classes = ShopProjectApplication.class)
 @Sql({"classpath:init.sql"})
 public class UserRepositoryTest {
+	
+	private final String ENCODE_PASSWORD = new BCryptPasswordEncoder().encode("pass");
 
 	@Autowired private UserRepository userRepository;
 	
@@ -30,7 +33,7 @@ public class UserRepositoryTest {
 		
 		assertThat(user.getEmail(), is("email"));
 		assertThat(user.getName(), is("name"));
-		assertThat(user.getPassword(), is("admin"));
+		assertThat(user.getPassword(), is("pass"));
 	}
 	
 	@Test
@@ -39,7 +42,7 @@ public class UserRepositoryTest {
 		
 		assertThat(user.getEmail(), is("email"));
 		assertThat(user.getName(), is("name"));
-		assertThat(user.getPassword(), is("admin"));
+		assertThat(user.getPassword(), is("pass"));
 	}
 	
 	@Test
@@ -48,7 +51,7 @@ public class UserRepositoryTest {
 		
 		assertNull(user);
 		
-		userRepository.save(new User("email1", "name", "111", Role.USER));
+		userRepository.save(new User("email1", "name", "pass", Role.USER));
 		
 		user = userRepository.findUserByEmail("email1");
 		
@@ -56,7 +59,7 @@ public class UserRepositoryTest {
 		assertEquals(2, user.getIdx());
 		assertEquals("email1", user.getEmail());
 		assertEquals("name", user.getName());
-		assertEquals("111", user.getPassword());
+		assertEquals(ENCODE_PASSWORD, user.getPassword());
 		assertEquals("USER", user.getRole().name());
 	}
 }

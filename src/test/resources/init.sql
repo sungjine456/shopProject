@@ -9,4 +9,4 @@ create table users (
 );
 
 insert into users
-values(1, 'admin', 'email', 'name', 'ADMIN');
+values(1, 'pass', 'email', 'name', 'ADMIN');
