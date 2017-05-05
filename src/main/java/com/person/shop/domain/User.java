@@ -5,12 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity(name="USERS")
+@SequenceGenerator(name = "SEQ_GENERATOR", sequenceName = "SEQ", initialValue = 1, allocationSize = 1)
 public class User {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GENERATOR")
 	private long idx;
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -23,11 +26,11 @@ public class User {
     private Role role;
 	
 	public User(){}
-	public User(String email, String name, String password){
+	public User(String email, String name, String password, Role role){
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		role = Role.USER;
+		this.role = role;
 	}
 
 	public long getIdx() {

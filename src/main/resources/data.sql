@@ -1,2 +1,2 @@
-insert into users
-values(1, 'email', 'name', 'pass', 'ADMIN');
+insert into users(idx, email, name, password, role)
+values(seq.nextval, 'email', 'name', 'pass', 'ADMIN');
