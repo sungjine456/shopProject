@@ -1,5 +1,7 @@
 package com.person.shop.dto;
 
+import java.time.LocalDateTime;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -19,7 +21,8 @@ public class CreateUserRequestDto {
 	
 	public User getUser() throws PasswordAndPasswordConfirmDoNotMatchException {
 		if(password.equals(passwordConfirm)){
-			return new User(email, name, password, Role.USER);
+			LocalDateTime date = LocalDateTime.now();
+			return new User(email, name, password, Role.USER, date, date);
 		} else {
 			throw new PasswordAndPasswordConfirmDoNotMatchException();
 		}

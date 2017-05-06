@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,11 +25,12 @@ public class UserServiceTest {
 	
 	@Mock private UserRepository userRepository;
 	@InjectMocks private UserServiceImpl userService;
+	private LocalDateTime date = LocalDateTime.now();
 
 	@Test
 	public void checkForDuplicateEmailTest() {
 		when(userRepository.findUserByEmail("email"))
-			.thenReturn(new User("email", "name", "pass", Role.USER));
+			.thenReturn(new User("email", "name", "pass", Role.USER, date, date));
 		
 		assertTrue(userService.checkForDuplicateEmail("email"));
 		assertFalse(userService.checkForDuplicateEmail("anotherEmail"));

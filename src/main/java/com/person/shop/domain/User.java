@@ -1,5 +1,7 @@
 package com.person.shop.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -24,13 +26,22 @@ public class User {
 	@Column(name = "role", nullable = false)
 	@Enumerated(EnumType.STRING)
     private Role role;
+	@Column(name = "use_yn", nullable = false)
+	private char useYn;
+	@Column(name = "reg_date", nullable = false)
+	private LocalDateTime regDate;
+	@Column(name = "up_date", nullable = false)
+	private LocalDateTime upDate;
 	
 	public User(){}
-	public User(String email, String name, String password, Role role){
+	public User(String email, String name, String password, Role role, LocalDateTime regDate, LocalDateTime upDate){
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.role = role;
+		useYn = 'Y';
+		this.regDate = regDate;
+		this.upDate = upDate;
 	}
 
 	public long getIdx() {
@@ -62,6 +73,24 @@ public class User {
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	public char getUseYn() {
+		return useYn;
+	}
+	public void setUseYn(char useYn) {
+		this.useYn = useYn;
+	}
+	public LocalDateTime getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(LocalDateTime regDate) {
+		this.regDate = regDate;
+	}
+	public LocalDateTime getUpDate() {
+		return upDate;
+	}
+	public void setUpDate(LocalDateTime upDate) {
+		this.upDate = upDate;
 	}
 	
 	@Override

@@ -6,4 +6,6 @@ public interface UserService {
 	void save(User user);
 	User findUserByEmail(String email);
 	boolean checkForDuplicateEmail(String email);
+	User leave(String email);
+	User update(User user);
 }

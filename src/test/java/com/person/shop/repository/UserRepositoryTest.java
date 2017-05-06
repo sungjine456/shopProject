@@ -6,11 +6,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
+import java.time.LocalDateTime;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -23,7 +24,7 @@ import com.person.shop.domain.User;
 @Sql({"classpath:init.sql"})
 public class UserRepositoryTest {
 	
-	private final String ENCODE_PASSWORD = new BCryptPasswordEncoder().encode("pass");
+	private LocalDateTime date = LocalDateTime.now();
 
 	@Autowired private UserRepository userRepository;
 	
@@ -51,7 +52,7 @@ public class UserRepositoryTest {
 		
 		assertNull(user);
 		
-		userRepository.save(new User("email1", "name", "pass", Role.USER));
+		userRepository.save(new User("email1", "name", "pass", Role.USER, date, date));
 		
 		user = userRepository.findUserByEmail("email1");
 		
@@ -59,7 +60,21 @@ public class UserRepositoryTest {
 		assertEquals(2, user.getIdx());
 		assertEquals("email1", user.getEmail());
 		assertEquals("name", user.getName());
-		assertEquals(ENCODE_PASSWORD, user.getPassword());
+		assertEquals("pass", user.getPassword());
 		assertEquals("USER", user.getRole().name());
+		
+		user.setName("setName");
+		user.setPassword("setPassword");
+		user.setUseYn('N');
+		userRepository.save(user);
+		
+		user = userRepository.findUserByEmail("email1");
+		
+		assertNotNull(user);
+		assertEquals(2, user.getIdx());
+		assertEquals("email1", user.getEmail());
+		assertEquals("setName", user.getName());
+		assertEquals("setPassword", user.getPassword());
+		assertEquals('N', user.getUseYn());
 	}
 }

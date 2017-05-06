@@ -1,5 +1,7 @@
 package com.person.shop.service.impl;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
 	
 	public void save(User user){
+		LocalDateTime date = LocalDateTime.now();
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		user.setRegDate(date);
+		user.setUpDate(date);
 		userRepository.save(user);
 	}
 	
@@ -32,5 +37,19 @@ public class UserServiceImpl implements UserService {
 	 */
 	public boolean checkForDuplicateEmail(String email){
 		return (userRepository.findUserByEmail(email) != null) ? true : false;
+	}
+	
+	public User leave(String email){
+		User user = userRepository.findUserByEmail(email);
+		user.setUseYn('N');
+		user.setUpDate(LocalDateTime.now());
+		
+		return userRepository.save(user);
+	}
+	
+	public User update(User user){
+		user.setUpDate(LocalDateTime.now());
+		
+		return userRepository.save(user);
 	}
 }
