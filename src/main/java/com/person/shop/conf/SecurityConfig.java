@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/admin/**").hasAuthority("ADMIN")
 				.antMatchers("/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
@@ -29,6 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.defaultSuccessUrl("/admin")
 				.permitAll()
 				.and()
+			.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll()
+                .and()
 			.csrf().disable()
 			.headers().frameOptions().disable();
 	}
