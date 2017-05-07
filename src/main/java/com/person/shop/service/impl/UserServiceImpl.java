@@ -1,7 +1,5 @@
 package com.person.shop.service.impl;
 
-import java.time.LocalDateTime;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
 	
 	public void save(User user){
-		LocalDateTime date = LocalDateTime.now();
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-		user.setRegDate(date);
-		user.setUpDate(date);
+		user.setRegDate();
+		user.setUpDate();
 		userRepository.save(user);
 	}
 	
@@ -42,14 +39,32 @@ public class UserServiceImpl implements UserService {
 	public User leave(String email){
 		User user = userRepository.findUserByEmail(email);
 		user.setUseYn('N');
-		user.setUpDate(LocalDateTime.now());
+		user.setUpDate();
 		
 		return userRepository.save(user);
 	}
 	
 	public User update(User user){
-		user.setUpDate(LocalDateTime.now());
+		user.setUpDate();
 		
 		return userRepository.save(user);
+	}
+	
+	public String translatePassword(String email){
+		User user = userRepository.findUserByEmail(email);
+		
+		StringBuilder random = new StringBuilder();
+		for(int i = 0; i < 6; i++){
+			random.append((int)(Math.random() * 10));
+		}
+		
+		String translatePassword = new BCryptPasswordEncoder().encode(random);
+		
+		user.setUpDate();
+		user.setPassword(translatePassword);
+		
+		userRepository.save(user);
+		
+		return random.toString();
 	}
 }

@@ -30,26 +30,31 @@ public class UserController {
 	}
 	
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginView(@RequestParam Optional<String> error, Model model) {
-        log.debug("loginView, error={}", error);
+    public String loginView(@RequestParam Optional<String> error, HttpSession session, Model model) {
+        log.info("loginView, error={}", error);
         model.addAttribute("error", error);
-        
+        String message = (String)session.getAttribute("message");
+    	if(StringUtils.isNotEmpty(message)){
+    		model.addAttribute("message", message);
+    		session.removeAttribute("message");
+    	}
         return "view/user/login";
     }
     
     @RequestMapping(value="/join", method=RequestMethod.GET)
     public String joinView(HttpSession session, Model model){
-    	log.debug("joinView");
+    	log.info("joinView");
     	String message = (String)session.getAttribute("message");
-    	if(StringUtils.isEmpty(message)){
+    	if(StringUtils.isNotEmpty(message)){
     		model.addAttribute("message", message);
+    		session.removeAttribute("message");
     	}
     	return "view/user/join";
     }
     
     @RequestMapping(value="/join", method=RequestMethod.POST)
     public String join(CreateUserRequestDto userDto, HttpSession session){
-    	log.debug("join");
+    	log.info("join");
     	if(userService.checkForDuplicateEmail(userDto.getEmail())){
     		log.debug("이미 가입된 이메일");
     		session.setAttribute("message", "이미 가입된 이메일입니다.");
@@ -63,6 +68,14 @@ public class UserController {
     		return "redirect:/join";
     	}
     	
+    	return "redirect:/login";
+    }
+    
+    @RequestMapping("/translatePassword")
+    public String translatePassword(String email, HttpSession session){
+    	log.info("translatePassword");
+    	String translatePassword = userService.translatePassword(email);
+    	session.setAttribute("message", translatePassword);
     	return "redirect:/login";
     }
 }

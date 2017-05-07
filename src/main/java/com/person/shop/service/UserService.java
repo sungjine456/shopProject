@@ -8,4 +8,5 @@ public interface UserService {
 	boolean checkForDuplicateEmail(String email);
 	User leave(String email);
 	User update(User user);
+	String translatePassword(String email);
 }

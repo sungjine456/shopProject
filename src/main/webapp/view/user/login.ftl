@@ -2,6 +2,12 @@
 <#import "/spring.ftl" as spring>
 <html>
 	<head>
+		<script>
+			<#assign message = message!""> 
+			<#if message != "">
+				alert("${message}");
+			</#if>
+		</script>
 		<title>로그인</title>
 		<link rel="stylesheet" href="/css/boot/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/boot/bootstrap-theme.min.css">
@@ -47,7 +53,7 @@
 							<input id="idSaveCheck" name="idSave" type="checkbox" value="check"> 자동 로그인
 						</td>
 						<td>
-							<a data-target="#layerpop" data-toggle="modal" style="float:right">비밀번호 재발급</a>
+							<a data-target="#layerpop" data-toggle="modal" style="float:right">비밀번호 재발급</button>
 						</td>
 					</tr>
 					<tr>
@@ -60,6 +66,35 @@
 					</tr>
 				</table>
 			</form>
+			<div class="modal fade" id="layerpop">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						 <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">×</button>
+							<h4 class="modal-title">비밀번호 재발급</h4>
+						</div>
+	 					<div class="modal-body">
+	 						<form id="translateForm" class="form-signin" action="/translatePassword" method="post">
+	 							<table>
+	 								<tr>
+										<th>
+											<label>이메일 : </label> 
+										</th>
+										<td>
+											<input id="email" class="form-control" name="email" "type="text"/>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2"> 
+											<button type="submit" id="translatePasswordBtn" class="btn btn-default" style="float:right">재발급</button>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script type="text/javascript" src="/js/common/jquery-1.12.3.min.js"></script>
 		<script type="text/javascript" src="/js/boot/bootstrap.min.js"></script>

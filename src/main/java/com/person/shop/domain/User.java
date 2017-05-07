@@ -83,14 +83,14 @@ public class User {
 	public LocalDateTime getRegDate() {
 		return regDate;
 	}
-	public void setRegDate(LocalDateTime regDate) {
-		this.regDate = regDate;
+	public void setRegDate() {
+		regDate = LocalDateTime.now();
 	}
 	public LocalDateTime getUpDate() {
 		return upDate;
 	}
-	public void setUpDate(LocalDateTime upDate) {
-		this.upDate = upDate;
+	public void setUpDate() {
+		upDate = LocalDateTime.now();
 	}
 	
 	@Override
