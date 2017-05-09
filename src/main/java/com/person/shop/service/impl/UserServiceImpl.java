@@ -14,9 +14,10 @@ import com.person.shop.service.UserService;
 @Transactional
 public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
+	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public void save(User user){
-		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setRegDate();
 		user.setUpDate();
 		userRepository.save(user);
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 			random.append((int)(Math.random() * 10));
 		}
 		
-		String translatePassword = new BCryptPasswordEncoder().encode(random);
+		String translatePassword = bCryptPasswordEncoder.encode(random);
 		
 		user.setUpDate();
 		user.setPassword(translatePassword);
