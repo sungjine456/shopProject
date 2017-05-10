@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.person.shop.dto.CreateUserRequestDto;
@@ -24,12 +25,12 @@ public class UserController {
 	
 	@Autowired private UserService userService;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String mainView(){
 		return "index";
 	}
 	
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String loginView(@RequestParam Optional<String> error, HttpSession session, Model model) {
         log.info("loginView, error={}", error);
         model.addAttribute("error", error);
@@ -41,7 +42,7 @@ public class UserController {
         return "view/user/login";
     }
     
-    @RequestMapping(value="/join", method=RequestMethod.GET)
+    @GetMapping("/join")
     public String joinView(HttpSession session, Model model){
     	log.info("joinView");
     	String message = (String)session.getAttribute("message");
@@ -52,7 +53,7 @@ public class UserController {
     	return "view/user/join";
     }
     
-    @RequestMapping(value="/join", method=RequestMethod.POST)
+    @PostMapping("/join")
     public String join(CreateUserRequestDto userDto, HttpSession session){
     	log.info("join");
     	if(userService.checkForDuplicateEmail(userDto.getEmail())){
