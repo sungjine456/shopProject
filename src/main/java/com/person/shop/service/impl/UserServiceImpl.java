@@ -1,7 +1,5 @@
 package com.person.shop.service.impl;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,7 +9,6 @@ import com.person.shop.repository.UserRepository;
 import com.person.shop.service.UserService;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
 	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -34,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	public boolean checkForDuplicateEmail(String email){
-		return (userRepository.findUserByEmail(email) != null) ? true : false;
+		return userRepository.findUserByEmail(email) != null;
 	}
 	
 	public User leave(String email){

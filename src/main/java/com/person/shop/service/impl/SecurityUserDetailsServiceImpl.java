@@ -14,8 +14,8 @@ import com.person.shop.domain.User;
 import com.person.shop.repository.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
-	private final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+public class SecurityUserDetailsServiceImpl implements UserDetailsService {
+	private final Logger log = LoggerFactory.getLogger(SecurityUserDetailsServiceImpl.class);
 
 	@Autowired
     private UserRepository userRepository;
