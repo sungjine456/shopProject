@@ -63,18 +63,15 @@ public class UserRepositoryTest {
 		assertEquals("pass", user.getPassword());
 		assertEquals("USER", user.getRole().name());
 		
-		user.setName("setName");
-		user.setPassword("setPassword");
-		user.setUseYn('N');
+		user.update("email12", "setName");
 		userRepository.save(user);
 		
-		user = userRepository.findUserByEmail("email1");
+		user = userRepository.findUserByEmail("email12");
 		
 		assertNotNull(user);
 		assertEquals(2, user.getIdx());
-		assertEquals("email1", user.getEmail());
+		assertEquals("email12", user.getEmail());
 		assertEquals("setName", user.getName());
-		assertEquals("setPassword", user.getPassword());
-		assertEquals('N', user.getUseYn());
+		assertEquals("pass", user.getPassword());
 	}
 }

@@ -27,70 +27,65 @@ public class User {
 	@Enumerated(EnumType.STRING)
     private Role role;
 	@Column(name = "use_yn", nullable = false)
-	private char useYn;
-	@Column(name = "reg_date", nullable = false)
-	private LocalDateTime regDate;
-	@Column(name = "up_date", nullable = false)
-	private LocalDateTime upDate;
+	private boolean useYn;
+	@Column(name = "create_date", nullable = false)
+	private LocalDateTime createDate;
+	@Column(name = "update_date", nullable = false)
+	private LocalDateTime updateDate;
 	
 	public User(){}
-	public User(String email, String name, String password, Role role, LocalDateTime regDate, LocalDateTime upDate){
+	public User(String email, String name, String password, Role role, LocalDateTime createDate, LocalDateTime updateDate){
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.role = role;
-		useYn = 'Y';
-		this.regDate = regDate;
-		this.upDate = upDate;
+		useYn = true;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
+	
+	public void create(String password){
+		this.password = password;
+		createDate = LocalDateTime.now();
+		updateDate = LocalDateTime.now();
+	}
+	public void leave(){
+		useYn = false;
+		updateDate = LocalDateTime.now();
+	}
+	public void update(String email, String name){
+		this.email = email;
+		this.name = name;
+		updateDate = LocalDateTime.now();
+	}
+	public void changePassword(String password){
+		this.password = password;
+		updateDate = LocalDateTime.now();
 	}
 
 	public long getIdx() {
 		return idx;
 	}
-	public void setIdx(long idx) {
-		this.idx = idx;
-	}
 	public String getPassword() {
 		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public String getName() {
 		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public Role getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
-	public char getUseYn() {
+	public boolean getUseYn() {
 		return useYn;
 	}
-	public void setUseYn(char useYn) {
-		this.useYn = useYn;
+	public LocalDateTime getCreateDate() {
+		return createDate;
 	}
-	public LocalDateTime getRegDate() {
-		return regDate;
-	}
-	public void setRegDate() {
-		regDate = LocalDateTime.now();
-	}
-	public LocalDateTime getUpDate() {
-		return upDate;
-	}
-	public void setUpDate() {
-		upDate = LocalDateTime.now();
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
 	}
 	
 	@Override
