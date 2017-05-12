@@ -11,6 +11,7 @@
 		<title>로그인</title>
 		<link rel="stylesheet" href="/css/boot/bootstrap.min.css">
 		<link rel="stylesheet" href="/css/boot/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="/css/common/common.css">
 		<style type="text/css">
 			.container {
 				width : 30%;
@@ -34,7 +35,7 @@
 					</colgroup>
 					<tr>
 						<th>
-							<label for="id">아이디 : </label>
+							<label for="email">이메일 : </label>
 						</th>
 						<td colspan="2">
 							<input type="text" id="email" class="form-control" name="email" autofocus/>
@@ -58,10 +59,10 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<a id="joinBtn">회원가입</a>
+							<a href="/join">회원가입</a>
 						</td>
 						<td>
-							<button type="submit" id="loginBtn" class="btn btn-primary" style="float:right">로그인</button>
+							<button type="button" id="loginBtn" class="btn btn-primary" style="float:right">로그인</button>
 						</td>
 					</tr>
 				</table>
@@ -78,15 +79,15 @@
 	 							<table>
 	 								<tr>
 										<th>
-											<label>이메일 : </label> 
+											<label for="translateEmail">이메일 : </label> 
 										</th>
 										<td>
-											<input id="email" class="form-control" name="email" "type="text"/>
+											<input id="translateEmail" class="form-control" name="email" "type="text"/>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="2"> 
-											<button type="submit" id="translatePasswordBtn" class="btn btn-default" style="float:right">재발급</button>
+											<button type="button" id="translatePasswordBtn" class="btn btn-default" style="float:right">재발급</button>
 										</td>
 									</tr>
 								</table>
@@ -98,5 +99,7 @@
 		</div>
 		<script type="text/javascript" src="/js/common/jquery-1.12.3.min.js"></script>
 		<script type="text/javascript" src="/js/boot/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/common/common.js"></script>
+		<script type="text/javascript" src="/js/user/login.js"></script>
 	</body>
 </html>

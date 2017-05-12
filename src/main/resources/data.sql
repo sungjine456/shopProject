@@ -1,2 +1,2 @@
 insert into users(idx, email, name, password, role, use_yn, create_date, update_date)
-values(seq.nextval, 'email', 'name', '$2a$10$B7wSg6VV33aMXtIpl44f3Oi21eLuJcP/VOFEdJKs/3XfUHExMWG.u', 'ADMIN', true, '2017-12-12', '2017-12-12');
+values(seq.nextval, 'email@shop.com', 'name', '$2a$10$B7wSg6VV33aMXtIpl44f3Oi21eLuJcP/VOFEdJKs/3XfUHExMWG.u', 'ADMIN', true, '2017-12-12', '2017-12-12');
