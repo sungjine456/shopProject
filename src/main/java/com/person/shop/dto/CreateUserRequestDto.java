@@ -22,7 +22,8 @@ public class CreateUserRequestDto {
 	public User getUser() throws PasswordAndPasswordConfirmDoNotMatchException {
 		if(password.equals(passwordConfirm)){
 			LocalDateTime date = LocalDateTime.now();
-			return new User(email, name, password, Role.USER, date, date);
+			return new User.Builder(email, name, password).setRole(Role.USER)
+							.setCreateDate(date).setUpdateDate(date).build();
 		} else {
 			throw new PasswordAndPasswordConfirmDoNotMatchException();
 		}

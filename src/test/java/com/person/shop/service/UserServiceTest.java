@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,11 +27,19 @@ public class UserServiceTest {
 	@Mock private UserRepository userRepository;
 	@InjectMocks private UserServiceImpl userService;
 	private LocalDateTime date = LocalDateTime.now();
+	
+	private User testUser;
+	
+	@Before
+	public void setup(){
+		testUser = new User.Builder("email", "name", "password").setRole(Role.USER)
+				.setCreateDate(date).setUpdateDate(date).build();
+	}
 
 	@Test
 	public void checkForDuplicateEmailTest() {
 		when(userRepository.findUserByEmail("email"))
-			.thenReturn(new User("email", "name", "pass", Role.USER, date, date));
+			.thenReturn(testUser);
 		
 		assertTrue(userService.checkForDuplicateEmail("email"));
 		assertFalse(userService.checkForDuplicateEmail("anotherEmail"));

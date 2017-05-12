@@ -8,6 +8,7 @@ import static org.junit.Assert.assertThat;
 
 import java.time.LocalDateTime;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class UserRepositoryTest {
 	private LocalDateTime date = LocalDateTime.now();
 
 	@Autowired private UserRepository userRepository;
+	
+	private User testUser;
+	
+	@Before
+	public void setup(){
+		testUser = new User.Builder("email1", "name", "password").setRole(Role.USER)
+				.setCreateDate(date).setUpdateDate(date).build();
+	}
 	
 	@Test
 	public void findUserByIdxTest() {
@@ -52,7 +61,7 @@ public class UserRepositoryTest {
 		
 		assertNull(user);
 		
-		userRepository.save(new User("email1", "name", "pass", Role.USER, date, date));
+		userRepository.save(testUser);
 		
 		user = userRepository.findUserByEmail("email1");
 		
@@ -60,7 +69,7 @@ public class UserRepositoryTest {
 		assertEquals(2, user.getIdx());
 		assertEquals("email1", user.getEmail());
 		assertEquals("name", user.getName());
-		assertEquals("pass", user.getPassword());
+		assertEquals("password", user.getPassword());
 		assertEquals("USER", user.getRole().name());
 		
 		user.update("email12", "setName");
@@ -72,6 +81,6 @@ public class UserRepositoryTest {
 		assertEquals(2, user.getIdx());
 		assertEquals("email12", user.getEmail());
 		assertEquals("setName", user.getName());
-		assertEquals("pass", user.getPassword());
+		assertEquals("password", user.getPassword());
 	}
 }

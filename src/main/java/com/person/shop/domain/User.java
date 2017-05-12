@@ -26,22 +26,52 @@ public class User {
 	@Column(name = "role", nullable = false)
 	@Enumerated(EnumType.STRING)
     private Role role;
-	@Column(name = "use_yn", nullable = false)
-	private boolean useYn;
+	@Column(name = "use_yn")
+	private boolean useYn = true;
 	@Column(name = "create_date", nullable = false)
 	private LocalDateTime createDate;
 	@Column(name = "update_date", nullable = false)
 	private LocalDateTime updateDate;
 	
 	public User(){}
-	public User(String email, String name, String password, Role role, LocalDateTime createDate, LocalDateTime updateDate){
-		this.email = email;
-		this.name = name;
-		this.password = password;
-		this.role = role;
-		useYn = true;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
+	private User(Builder builder){
+		this.email = builder.email;
+		this.name = builder.name;
+		this.password = builder.password;
+		this.role = builder.role;
+		this.createDate = builder.createDate;
+		this.updateDate = builder.updateDate;
+	}
+	
+	public static class Builder {
+		private String email;
+		private String name;
+		private String password;
+		private Role role;
+		private LocalDateTime createDate;
+		private LocalDateTime updateDate;
+		
+		public Builder(String email, String name, String password){
+			this.email = email;
+			this.name = name;
+			this.password = password;
+		}
+		
+		public Builder setRole(Role role){
+			this.role = role;
+			return this;
+		}
+		public Builder setCreateDate(LocalDateTime createDate){
+			this.createDate = createDate;
+			return this;
+		}
+		public Builder setUpdateDate(LocalDateTime updateDate){
+			this.updateDate = updateDate;
+			return this;
+		}
+		public User build(){
+			return new User(this);
+		}
 	}
 	
 	public void create(String password){
