@@ -41,7 +41,7 @@ public class UserServiceTest {
 		when(userRepository.findUserByEmail("email@shop.com"))
 			.thenReturn(testUser);
 		
-		assertTrue(userService.checkForDuplicateEmail("email@shop.com"));
-		assertFalse(userService.checkForDuplicateEmail("anotherEmail@shop.com"));
+		assertTrue(userService.checkForDuplicateEmail("email@shop.com").isCheck());
+		assertFalse(userService.checkForDuplicateEmail("anotherEmail@shop.com").isCheck());
 	}
 }

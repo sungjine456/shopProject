@@ -1,5 +1,7 @@
 package com.person.shop.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -12,11 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.person.shop.dto.CreateUserRequestDto;
 import com.person.shop.exception.PasswordAndPasswordConfirmDoNotMatchException;
+import com.person.shop.pojo.CheckMessage;
 import com.person.shop.service.UserService;
 
 @Controller
@@ -56,9 +59,10 @@ public class UserController {
     @PostMapping("/join")
     public String join(CreateUserRequestDto userDto, HttpSession session){
     	log.info("join");
-    	if(userService.checkForDuplicateEmail(userDto.getEmail())){
+    	CheckMessage emailCheck = userService.checkForDuplicateEmail(userDto.getEmail());
+    	if(!emailCheck.isCheck()){
     		log.debug("이미 가입된 이메일");
-    		session.setAttribute("message", "이미 가입된 이메일입니다.");
+    		session.setAttribute("message", emailCheck.getMessage());
     		return "redirect:/join";
     	}
     	try {
@@ -72,11 +76,21 @@ public class UserController {
     	return "redirect:/login";
     }
     
-    @RequestMapping("/translatePassword")
+    @GetMapping("/translatePassword")
     public String translatePassword(String email, HttpSession session){
     	log.info("translatePassword");
     	String translatePassword = userService.translatePassword(email);
     	session.setAttribute("message", translatePassword);
     	return "redirect:/login";
+    }
+    
+    @PostMapping("/join/emailCheck")
+    @ResponseBody
+    public Map<String, String> emailCheck(String email){
+    	Map<String, String> map = new HashMap<>();
+    	CheckMessage emailCheck = userService.checkForDuplicateEmail(email);
+		map.put("message", emailCheck.getMessage());
+		map.put("bool", String.valueOf(emailCheck.isCheck()));
+    	return map;
     }
 }
