@@ -20,7 +20,7 @@
 		<div class="container" style="margin-left:25%; margin-top:5%">
 			<h1> 회원 가입 </h1>
 			<form id="form" action="/join" method="post">
-				<input type="hidden" id="idBool" value="false"/>
+				<input type="hidden" id="passwordBool" value="false"/>
 				<input type="hidden" id="emailBool" value="false"/>
 				<div class="container">
 					<div class="row">
@@ -85,5 +85,7 @@
 		</div>
 		<script type="text/javascript" src="/js/common/jquery-1.12.3.min.js"></script>
 		<script type="text/javascript" src="/js/boot/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/js/common/common.js"></script>
+		<script type="text/javascript" src="/js/user/join.js"></script>
 	</body>
 </html>
