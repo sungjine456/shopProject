@@ -12,4 +12,4 @@ create table users (
 );
 
 insert into users
-values(1, 'pass', 'email', 'name', 'ADMIN', true, '2017-12-12', '2017-12-12');
+values(1, 'pass', 'email@shop.com', 'name', 'ADMIN', true, '2017-12-12', '2017-12-12');

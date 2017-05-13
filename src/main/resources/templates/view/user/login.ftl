@@ -51,7 +51,7 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input id="idSaveCheck" name="idSave" type="checkbox" value="check"> 자동 로그인
+							<input name="auto_login" type="checkbox" value="true"> 자동 로그인
 						</td>
 						<td>
 							<a data-target="#layerpop" data-toggle="modal" style="float:right">비밀번호 재발급</button>

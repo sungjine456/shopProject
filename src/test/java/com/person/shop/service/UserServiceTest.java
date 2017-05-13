@@ -32,16 +32,16 @@ public class UserServiceTest {
 	
 	@Before
 	public void setup(){
-		testUser = new User.Builder("email", "name", "password").setRole(Role.USER)
+		testUser = new User.Builder("email@shop.com", "name", "password").setRole(Role.USER)
 				.setCreateDate(date).setUpdateDate(date).build();
 	}
 
 	@Test
 	public void checkForDuplicateEmailTest() {
-		when(userRepository.findUserByEmail("email"))
+		when(userRepository.findUserByEmail("email@shop.com"))
 			.thenReturn(testUser);
 		
-		assertTrue(userService.checkForDuplicateEmail("email"));
-		assertFalse(userService.checkForDuplicateEmail("anotherEmail"));
+		assertTrue(userService.checkForDuplicateEmail("email@shop.com"));
+		assertFalse(userService.checkForDuplicateEmail("anotherEmail@shop.com"));
 	}
 }

@@ -39,6 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .permitAll()
                 .and()
+            .rememberMe()
+            	.key("rememberkey")
+            	.rememberMeCookieName("rmcn")
+            	.rememberMeParameter("auto_login")
+            	.tokenValiditySeconds(60*60*24*30)
+            	.and()
 			.csrf().disable()
 			.headers().frameOptions().disable();
 	}
