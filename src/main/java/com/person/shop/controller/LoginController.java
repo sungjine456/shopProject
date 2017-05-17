@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.person.shop.dto.CreateUserRequestDto;
 import com.person.shop.exception.PasswordAndPasswordConfirmDoNotMatchException;
@@ -29,14 +30,10 @@ public class LoginController {
 	@Autowired private UserService userService;
 	
 	@GetMapping("/login")
-    public String loginView(@RequestParam Optional<String> error, HttpSession session, Model model) {
+    public String loginView(@RequestParam Optional<String> error, Model model) {
         log.info("loginView, error={}", error);
+        
         model.addAttribute("error", error);
-        String message = (String)session.getAttribute("message");
-    	if(StringUtils.isNotEmpty(message)){
-    		model.addAttribute("message", message);
-    		session.removeAttribute("message");
-    	}
         return "view/user/login";
     }
     
@@ -52,19 +49,19 @@ public class LoginController {
     }
     
     @PostMapping("/join")
-    public String join(CreateUserRequestDto userDto, HttpSession session){
+    public String join(CreateUserRequestDto userDto, RedirectAttributes ra){
     	log.info("join");
     	CheckMessage emailCheck = userService.checkForDuplicateEmail(userDto.getEmail());
     	if(!emailCheck.isCheck()){
     		log.debug("이미 가입된 이메일");
-    		session.setAttribute("message", emailCheck.getMessage());
+    		ra.addFlashAttribute("message", emailCheck.getMessage());
     		return "redirect:/join";
     	}
     	try {
     		userService.save(userDto.getUser());
     	} catch(PasswordAndPasswordConfirmDoNotMatchException ppnme){
     		log.error(ppnme.getMessage());
-    		session.setAttribute("message", "비밀번호를 확인해주세요.");
+    		ra.addFlashAttribute("message", "비밀번호를 확인해주세요.");
     		return "redirect:/join";
     	}
     	
@@ -72,10 +69,10 @@ public class LoginController {
     }
     
     @GetMapping("/translatePassword")
-    public String translatePassword(String email, HttpSession session){
+    public String translatePassword(String email, RedirectAttributes ra){
     	log.info("translatePassword");
     	String translatePassword = userService.translatePassword(email);
-    	session.setAttribute("message", translatePassword);
+    	ra.addFlashAttribute("message", translatePassword);
     	return "redirect:/login";
     }
     
