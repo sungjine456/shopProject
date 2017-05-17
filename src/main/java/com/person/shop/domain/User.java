@@ -29,9 +29,9 @@ public class User {
 	@Column(name = "use_yn")
 	private boolean useYn = true;
 	@Column(name = "create_date", nullable = false)
-	private LocalDateTime createDate;
+	private LocalDateTime createDate = LocalDateTime.now();
 	@Column(name = "update_date", nullable = false)
-	private LocalDateTime updateDate;
+	private LocalDateTime updateDate = LocalDateTime.now();
 	
 	public User(){}
 	private User(Builder builder){
@@ -74,11 +74,6 @@ public class User {
 		}
 	}
 	
-	public void create(String password){
-		this.password = password;
-		createDate = LocalDateTime.now();
-		updateDate = LocalDateTime.now();
-	}
 	public void leave(){
 		useYn = false;
 		updateDate = LocalDateTime.now();

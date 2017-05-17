@@ -77,7 +77,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="col-md-5"></div>
-							<button type="submit" id="joinBtn" class="btn btn-primary">회원가입</button>
+							<button type="button" id="joinBtn" class="btn btn-primary">회원가입</button>
 						</div>
 					</div>
 				</div>

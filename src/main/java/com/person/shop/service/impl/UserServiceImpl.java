@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public void save(User user){
-		user.create(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.changePassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		
 		userRepository.save(user);
 	}

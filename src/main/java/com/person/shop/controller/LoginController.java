@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.person.shop.domain.User;
 import com.person.shop.dto.CreateUserRequestDto;
 import com.person.shop.exception.PasswordAndPasswordConfirmDoNotMatchException;
 import com.person.shop.pojo.CheckMessage;
@@ -51,19 +52,23 @@ public class LoginController {
     @PostMapping("/join")
     public String join(CreateUserRequestDto userDto, RedirectAttributes ra){
     	log.info("join");
-    	CheckMessage emailCheck = userService.checkForDuplicateEmail(userDto.getEmail());
-    	if(!emailCheck.isCheck()){
-    		log.debug("이미 가입된 이메일");
-    		ra.addFlashAttribute("message", emailCheck.getMessage());
-    		return "redirect:/join";
-    	}
+    	User user = null;
     	try {
-    		userService.save(userDto.getUser());
+    		user = userDto.getUser();
     	} catch(PasswordAndPasswordConfirmDoNotMatchException ppnme){
     		log.error(ppnme.getMessage());
     		ra.addFlashAttribute("message", "비밀번호를 확인해주세요.");
     		return "redirect:/join";
     	}
+    	
+    	CheckMessage emailCheck = userService.checkForDuplicateEmail(user.getEmail());
+    	if(!emailCheck.isCheck()){
+    		log.debug("이미 가입된 이메일");
+    		ra.addFlashAttribute("message", emailCheck.getMessage());
+    		return "redirect:/join";
+    	}
+    	
+    	userService.save(user);
     	
     	return "redirect:/login";
     }
