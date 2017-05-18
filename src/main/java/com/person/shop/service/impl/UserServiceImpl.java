@@ -1,5 +1,7 @@
 package com.person.shop.service.impl;
 
+import java.util.stream.IntStream;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -73,9 +75,7 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findUserByEmail(email);
 		
 		StringBuilder random = new StringBuilder();
-		for(int i = 0; i < 6; i++){
-			random.append((int)(Math.random() * 10));
-		}
+		IntStream.range(0, 6).forEach(i->random.append((int)(Math.random() * 10)));
 		
 		String translatePassword = bCryptPasswordEncoder.encode(random);
 		

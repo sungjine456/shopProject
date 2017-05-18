@@ -75,7 +75,7 @@
 							<h4 class="modal-title">비밀번호 재발급</h4>
 						</div>
 	 					<div class="modal-body">
-	 						<form id="translateForm" class="form-signin" action="/translatePassword" method="post">
+	 						<form id="translateForm" class="form-signin" action="/login/translatePassword" method="post">
 	 							<table>
 	 								<tr>
 										<th>

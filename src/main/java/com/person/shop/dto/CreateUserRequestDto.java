@@ -41,4 +41,9 @@ public class CreateUserRequestDto {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
+	
+	public String toString(){
+		return "email : " + email + ", name : " + name + ", password : " + password
+				+ ", passwordConfirm : " + passwordConfirm;
+	}
 }

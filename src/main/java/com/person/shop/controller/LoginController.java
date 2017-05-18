@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +36,15 @@ public class LoginController {
     }
     
     @GetMapping("/join")
-    public String joinView(HttpSession session, Model model){
+    public String joinView(){
     	log.info("joinView");
-    	String message = (String)session.getAttribute("message");
-    	if(StringUtils.isNotEmpty(message)){
-    		model.addAttribute("message", message);
-    		session.removeAttribute("message");
-    	}
+
     	return "view/user/join";
     }
     
     @PostMapping("/join")
     public String join(CreateUserRequestDto userDto, RedirectAttributes ra){
-    	log.info("join");
+    	log.info("join, createUserRequestDto : {}", userDto);
     	User user = null;
     	try {
     		user = userDto.getUser();
@@ -73,9 +66,9 @@ public class LoginController {
     	return "redirect:/login";
     }
     
-    @GetMapping("/translatePassword")
+    @PostMapping("/login/translatePassword")
     public String translatePassword(String email, RedirectAttributes ra){
-    	log.info("translatePassword");
+    	log.info("translatePassword, email : {}", email);
     	String translatePassword = userService.translatePassword(email);
     	ra.addFlashAttribute("message", translatePassword);
     	return "redirect:/login";
@@ -84,6 +77,7 @@ public class LoginController {
     @PostMapping("/join/emailCheck")
     @ResponseBody
     public Map<String, String> emailCheck(String email){
+    	log.info("emailCheck, email : {}", email);
     	Map<String, String> map = new HashMap<>();
     	CheckMessage emailCheck = userService.checkForDuplicateEmail(email);
 		map.put("message", emailCheck.getMessage());
