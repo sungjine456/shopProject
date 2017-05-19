@@ -18,10 +18,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
 	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	public void save(User user){
-		user.changePassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		
-		userRepository.save(user);
+	public boolean save(User user){
+		if(user != null && user.changePassword(bCryptPasswordEncoder.encode(user.getPassword()))){
+			userRepository.save(user);
+			return true;
+		}
+		return false;
 	}
 	
 	public User findUserByEmail(String email){
@@ -60,12 +62,10 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public User update(User user){
-		if(!CommonUtils.isEmail(user.getEmail())){
-			return null;
+		if(user != null && user.update(user.getEmail(), user.getName())){
+			return userRepository.save(user);
 		}
-		user.update(user.getEmail(), user.getName());
-		
-		return userRepository.save(user);
+		return null;
 	}
 	
 	public String translatePassword(String email){

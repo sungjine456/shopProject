@@ -61,9 +61,11 @@ public class LoginController {
     		return "redirect:/join";
     	}
     	
-    	userService.save(user);
-    	
-    	return "redirect:/login";
+    	if(userService.save(user)){
+    		return "redirect:/login";
+    	}
+    	ra.addFlashAttribute("message", "가입에 실패하였습니다.");
+    	return "redirect:/join";
     }
     
     @PostMapping("/login/translatePassword")

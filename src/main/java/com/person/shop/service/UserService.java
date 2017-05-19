@@ -4,7 +4,7 @@ import com.person.shop.domain.User;
 import com.person.shop.pojo.CheckMessage;
 
 public interface UserService {
-	void save(User user);
+	boolean save(User user);
 	User findUserByEmail(String email);
 	CheckMessage checkForDuplicateEmail(String email);
 	User leave(String email);

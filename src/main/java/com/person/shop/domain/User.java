@@ -11,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.person.shop.common.CommonUtils;
+
 @Entity(name="USERS")
 @SequenceGenerator(name = "SEQ_GENERATOR", sequenceName = "SEQ", initialValue = 1, allocationSize = 1)
 public class User {
@@ -78,14 +82,22 @@ public class User {
 		useYn = false;
 		updateDate = LocalDateTime.now();
 	}
-	public void update(String email, String name){
+	public boolean update(String email, String name){
+		if(!CommonUtils.isEmail(email) || StringUtils.isEmpty(name)){
+			return false;
+		}
 		this.email = email;
 		this.name = name;
 		updateDate = LocalDateTime.now();
+		return true;
 	}
-	public void changePassword(String password){
+	public boolean changePassword(String password){
+		if(StringUtils.isEmpty(password)){
+			return false;
+		}
 		this.password = password;
 		updateDate = LocalDateTime.now();
+		return true;
 	}
 
 	public long getIdx() {
